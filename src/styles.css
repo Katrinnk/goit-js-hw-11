@@ -1,0 +1,52 @@
+img{
+    width: 100%;
+    height: auto;
+}
+
+.hidden{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.search-form{
+    display: flex;
+    justify-content: center;
+}
+
+input{
+    height: 30px;
+    width: 50%;
+    margin-right: 30px;
+}
+
+button{
+    background-color:rgb(202, 192, 212);
+    border: none;
+    border-radius: 10%;
+    width: 100px;
+    color:rgb(64, 11, 114)
+}
+
+.gallery{
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.photo-card{
+    flex-basis: calc((100% - 40px) / 5);
+    border: solid;
+    border-radius:  5px;
+    border-color: #040005;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info{
+    display: flex;
+    gap: 20px;
+}
