@@ -24,8 +24,12 @@ button{
     background-color:rgb(202, 192, 212);
     border: none;
     border-radius: 10%;
+    color:rgb(64, 11, 114);
+    font-size: 15px;
+}
+
+.submit-btn{
     width: 100px;
-    color:rgb(64, 11, 114)
 }
 
 .gallery{
@@ -49,4 +53,10 @@ button{
 .info{
     display: flex;
     gap: 20px;
+}
+
+.load-more-btn{
+    margin-left: 47%;
+    margin-top: 20px;
+    padding: 12px;
 }
