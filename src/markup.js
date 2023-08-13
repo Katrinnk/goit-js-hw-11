@@ -1,13 +1,10 @@
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
 
 const gallery = document.querySelector('.gallery');
 
 export function createMarkup(photos){
-    gallery.innerHTML = '';
     const markup = photos.map(photo => `
     <div class="photo-card">
-        <a class="gallery-link" href="${photo.largeImageURL}">
+        <a class="gallery-link" href="${photo.webformatURL}">
             <img src="${photo.webformatURL}" alt="${photo.tags}" loading="lazy" />
         </a>
       <div class="info">
@@ -27,10 +24,4 @@ export function createMarkup(photos){
     </div>
   `).join('');
   gallery.insertAdjacentHTML('beforeend', markup);
-
-  const lightboxGallery = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
-
 }

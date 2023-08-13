@@ -1,5 +1,6 @@
 import  {Notify}  from 'notiflix';
-
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 import { getPhotos } from './api';
 import { createMarkup } from './markup';
@@ -18,7 +19,7 @@ form.addEventListener('submit', Submit);
 loadMoreBtn.addEventListener('click', loadMore);
 
 
-async  function Submit(e) {
+ function Submit(e) {
       e.preventDefault();
       gallery.innerHTML = '';
       query = e.target.searchQuery.value.trim();
@@ -30,16 +31,19 @@ async  function Submit(e) {
 
         getPhotos(query, page, perPage)
         .then((data) => {
-          const photos = data.hits;
           
           if (data.totalHits === 0){
             Notify.failure('Sorry, there are no images matching your search query. Please try again.')
-          }else{
-            Notify.success(`Hooray! We found ${data.totalHits} images.`);
-            createMarkup(photos);
-            loadMore();
-            lightboxGallery.refresh();
+            return;
           }
+    
+            Notify.success(`Hooray! We found ${data.totalHits} images.`);
+            createMarkup(data.hits);
+            lightboxGallery.refresh();
+
+            if (data.totalHits > perPage) {
+              loadMoreBtn.classList.remove('hidden');
+            }    
         })
         .catch((e) => {
           console.error(e);
@@ -51,25 +55,28 @@ async  function Submit(e) {
 
    function loadMore(){
   
+    page +=1; 
+
     getPhotos(query, page, perPage)
     .then((data) => {
       const currentPage = Math.ceil(data.totalHits / perPage);
       console.log(currentPage);
       console.log(page);
 
+      loadMoreBtn.classList.remove('hidden');
+      createMarkup(data.hits);
+      lightboxGallery.refresh();
+      scroll(); 
+
       if (page === currentPage){
-        Notify.info('We\`re sorry, but you\'ve reached the end of search results');
         loadMoreBtn.classList.add('hidden');
-      }else{
-        createMarkup(data.hits);
-        loadMoreBtn.classList.remove('hidden');
-        scroll();
-        lightboxGallery.refresh();
-        page +=1;
-       }
+        Notify.info('We\`re sorry, but you\'ve reached the end of search results');
+      }
     })
-    .catch((e) => Notify.failure(`Oops! Something went wrong! Try reloading the page! ${e}`));
+    .catch((e) => Notify.failure(`Oops! Something went wrong! Try reloading the page! ${e}`))
+    .finally(() => form.reset());
     }
+
 
   
     const lightboxGallery = new SimpleLightbox('.gallery a', {
