@@ -29,11 +29,14 @@ loadMoreBtn.addEventListener('click', loadMore);
           return;
         }
 
+        page = 1;
+
         getPhotos(query, page, perPage)
         .then((data) => {
           
           if (data.totalHits === 0){
             Notify.failure('Sorry, there are no images matching your search query. Please try again.')
+            loadMoreBtn.classList.add('hidden');
             return;
           }
     
